@@ -1,0 +1,42 @@
+
+name: Build Super Store APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Extract project
+        run: unzip -o super_store_manager_source.zip
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        working-directory: super_store_manager
+        run: flutter pub get
+
+      - name: Run tests
+        working-directory: super_store_manager
+        run: flutter test
+
+      - name: Build Android APK
+        working-directory: super_store_manager
+        run: flutter build apk --release
+
+      - name: Save APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Super-Store-Manager
+          path: super_store_manager/build/app/outputs/flutter-apk/app-release.apk
