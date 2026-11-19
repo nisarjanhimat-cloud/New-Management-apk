@@ -19,7 +19,10 @@ jobs:
         run: unzip -o super_store_manager_source.zip
       - name: Fix PDF dependency
         working-directory: super_store_manager
-        run: sed -i 's/pdf: ^3\.13\.1/pdf: ^3.12.0/' pubspec.yaml
+        run: sed -i 's/pdf- name: Fix PDF dependency
+  working-directory: super_store_manager
+  run: |
+    sed -i 's/pdf: ^3\.13\.1/pdf: ^3.12.`' pubspec.yaml
         run: sed -i 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
